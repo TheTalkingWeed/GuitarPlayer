@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_chords">
+
+    <fragment
+        android:id="@+id/nav_chords"
+        android:name="com.example.firstapp.ui.chords.ChordsFragment"
+        android:label="@string/menu_chords"
+        tools:layout="@layout/fragment_chords" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.firstapp.ui.gallery.GalleryFragment"
+        android:label="@string/menu_strum"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.firstapp.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+</navigation>

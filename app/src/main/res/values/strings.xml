@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">FirstApp</string>
+    <string name="add_chord_name">Add chord</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Guitar</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_chords">Chords view</string>
+    <string name="menu_strum">Strum view</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="add_chord">Add chord</string>
+
+    <string name="dropdown_name">Chord names</string>
+    <string-array name="chords">
+        <item>A</item>
+        <item>A#</item>
+        <item>B</item>
+        <item>C</item>
+        <item>C#</item>
+        <item>D</item>
+        <item>D#</item>
+        <item>E</item>
+        <item>F</item>
+        <item>F#</item>
+        <item>G</item>
+        <item>G#</item>
+    </string-array>
+</resources>
