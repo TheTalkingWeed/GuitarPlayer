@@ -1,9 +1,9 @@
 package com.example.firstapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
@@ -15,9 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,6 +24,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firstapp.databinding.ActivityMainBinding;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,34 +39,10 @@ public class MainActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == 200){
-                        switch (buttonId){
-                            case R.id.button1 :
-                                button = (Button) findViewById(R.id.button1);
-                                break;
-                            case R.id.button2 :
-                                button = (Button) findViewById(R.id.button2);
-                                break;
-                            case R.id.button3 :
-                                button = (Button) findViewById(R.id.button3);
-                                break;
-                            case R.id.button4 :
-                                button = (Button) findViewById(R.id.button4);
-                                break;
-                            case R.id.button5 :
-                                button = (Button) findViewById(R.id.button5);
-                                break;
-                            case R.id.button6 :
-                                button = (Button) findViewById(R.id.button6);
-                                break;
-                            case R.id.button7 :
-                                button = (Button) findViewById(R.id.button7);
-                                break;
-                            case R.id.button8 :
-                                button = (Button) findViewById(R.id.button8);
-                                break;
 
-                        }
+                    if(result.getResultCode() == 200){
+
+                        button = (Button) findViewById(buttonId);
 
                         Intent intent = result.getData();
                         String data = "";
@@ -75,12 +51,20 @@ public class MainActivity extends AppCompatActivity {
                              data = intent.getStringExtra("result");
                          }
 
+
+
                          button.setText(data);
+                         button.setBackgroundColor(getResources().getColor(R.color.added_chord));
 
                     }
                 }
             }
     );
+
+    private Button[] buttons = new Button[8];
+    private int ids = 0;
+
+
 
 
     @Override
@@ -104,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+        for (int i = 0; i < 8; i++) {
+            ids = getResources().getIdentifier("button" + i , "id", getPackageName());
+            buttons[i]  =(Button) findViewById(ids);
+            System.out.println("idk:: " + ids);
+        }
 
     }
 
@@ -124,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         Switch modeSwitch = (Switch) findViewById(R.id.switch_mode);
 
         Boolean play = modeSwitch.isChecked();
-
+        button = (Button) v;
         if(!play){
             Intent intent = new Intent(MainActivity.this, AddChord.class);
             buttonId = v.getId();
@@ -141,14 +130,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void playmodeToggle(View v) {
 
 
 
+        Switch modeSwitch = (Switch) findViewById(R.id.switch_mode);
+
+        Boolean playmode = modeSwitch.isChecked();
+
+        System.out.println(playmode);
+        if (playmode) {
+            for (int i = 0; i < 8; i++) {
+
+                buttons[i].setOnTouchListener((view, event) -> {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            return true;
+                        case MotionEvent.ACTION_UP:
+                            return true;
+                    }
+                    return false;
+                });
+            }
+        } else {
+            for (int i = 0; i < 8; i++) {
 
 
+                buttons[i].setOnTouchListener((view, event) -> {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            return true;
+                        case MotionEvent.ACTION_UP:
+                            Intent intent = new Intent(MainActivity.this, AddChord.class);
+                            buttonId = view.getId();
+                            chordNameResult.launch(intent);
+                            return true;
+                    }
+                    return false;
+                });
+            }
 
 
+        }
 
+
+    }
 }
 
 
