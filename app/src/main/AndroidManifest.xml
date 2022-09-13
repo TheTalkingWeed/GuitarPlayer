@@ -26,10 +26,10 @@
         </activity>
 
         <activity android:name=".ui.chordadder.AddChord"
-            android:label="@string/add_chord_name"
-            >
+            android:label="@string/add_chord_name">
 
         </activity>
+
     </application>
 
 </manifest>

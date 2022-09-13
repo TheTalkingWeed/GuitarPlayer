@@ -5,6 +5,7 @@
     android:id="@+id/chords_adder_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/add_chord_background"
     tools:context="com.example.firstapp.MainActivity">
 
     <TableLayout
@@ -31,7 +32,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
             <Button
                 android:id="@+id/button1"
@@ -41,7 +43,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
         </TableRow>
 
@@ -57,7 +60,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
             <Button
                 android:id="@+id/button3"
@@ -67,7 +71,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
         </TableRow>
 
@@ -83,7 +88,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
             <Button
                 android:id="@+id/button5"
@@ -93,7 +99,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
         </TableRow>
 
@@ -109,7 +116,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
             <Button
                 android:id="@+id/button7"
@@ -119,7 +127,8 @@
                 android:onClick="handleClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:backgroundTint="@color/add_chord_buttonColor"/>
 
         </TableRow>
 
@@ -133,6 +142,7 @@
         android:layout_marginTop="9dp"
         android:onClick="playmodeToggle"
         android:text="@string/action_playmode"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

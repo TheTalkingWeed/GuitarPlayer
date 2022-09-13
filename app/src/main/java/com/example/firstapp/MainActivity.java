@@ -25,9 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firstapp.databinding.ActivityMainBinding;
 
-
-
-
 public class MainActivity extends AppCompatActivity {
 
     Button button;
@@ -85,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.setItemTextColor(getResources().getColorStateList(R.color.white));
+
 
 
         for (int i = 0; i < 8; i++) {
@@ -145,8 +146,11 @@ public class MainActivity extends AppCompatActivity {
                 buttons[i].setOnTouchListener((view, event) -> {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            button  = (Button)findViewById(view.getId());
+                            button.setBackgroundColor(getResources().getColor(R.color.add_chord_background));
                             return true;
                         case MotionEvent.ACTION_UP:
+                            button.setBackgroundColor(getResources().getColor(R.color.added_chord));
                             return true;
                     }
                     return false;

@@ -31,14 +31,16 @@ public class AddChord extends Activity {
         Spinner chords=findViewById(R.id.spinner_chords);
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this, R.array.chords, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_list);
         chords.setAdapter(adapter);
 
         Spinner chordtype=findViewById(R.id.spinner_chordtype);
 
         ArrayAdapter<CharSequence> adapter2=ArrayAdapter.createFromResource(this, R.array.chordtype, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(R.layout.spinner_list);
         chordtype.setAdapter(adapter2);
+
+
 
     }
 
