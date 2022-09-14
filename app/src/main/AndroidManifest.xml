@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.firstapp">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,8 +28,8 @@
 
         <activity android:name=".ui.chordadder.AddChord"
             android:label="@string/add_chord_name">
-
         </activity>
+
 
     </application>
 

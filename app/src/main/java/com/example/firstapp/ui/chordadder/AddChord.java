@@ -2,20 +2,12 @@ package com.example.firstapp.ui.chordadder;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-
-import androidx.appcompat.widget.ButtonBarLayout;
-
-import com.example.firstapp.MainActivity;
 import com.example.firstapp.R;
-import com.google.android.material.navigation.NavigationView;
 
 
 public class AddChord extends Activity {

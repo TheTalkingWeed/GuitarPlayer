@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_chords" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_strum"
         android:name="com.example.firstapp.ui.gallery.GalleryFragment"
         android:label="@string/menu_strum"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.firstapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_diagrams"
+        android:name="com.example.firstapp.ui.slideshow.DiagramFragment"
+        android:label="@string/menu_diagrams"
+        tools:layout="@layout/fragment_diagram" />
 </navigation>

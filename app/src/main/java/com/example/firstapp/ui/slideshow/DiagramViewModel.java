@@ -1,14 +1,16 @@
 package com.example.firstapp.ui.slideshow;
 
+import android.view.View;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class DiagramViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public DiagramViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is slideshow fragment");
     }
@@ -16,4 +18,6 @@ public class SlideshowViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
+
 }

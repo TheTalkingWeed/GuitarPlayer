@@ -29,6 +29,9 @@ public class GalleryFragment extends Fragment {
         return root;
     }
 
+
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

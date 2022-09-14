@@ -12,7 +12,7 @@
 
     <string name="menu_chords">Chords view</string>
     <string name="menu_strum">Strum view</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_diagrams">Chords diagrams</string>
     <string name="add_chord">Add chord</string>
 
     <string name="dropdown_name">Chord names</string>

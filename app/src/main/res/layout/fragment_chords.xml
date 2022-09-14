@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/add_chord_background"
-    tools:context="com.example.firstapp.MainActivity">
+    tools:context=".ui.chords.ChordsFragment">
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -40,7 +40,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -57,7 +57,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -68,7 +68,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -85,7 +85,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -96,7 +96,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -113,7 +113,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -124,7 +124,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                android:onClick="handleClick"
+                
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"

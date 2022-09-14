@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.firstapp.databinding.FragmentSlideshowBinding;
+import com.example.firstapp.databinding.FragmentDiagramBinding;
 
-public class SlideshowFragment extends Fragment {
+public class DiagramFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentDiagramBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        DiagramViewModel slideshowViewModel =
+                new ViewModelProvider(this).get(DiagramViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentDiagramBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
@@ -34,4 +34,6 @@ public class SlideshowFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }
