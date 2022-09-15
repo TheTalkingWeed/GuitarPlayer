@@ -29,7 +29,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                
+                android:onClick="handleAddClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -40,7 +40,7 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                
+                android:onClick="handleAddClick"
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -57,7 +57,8 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                
+                android:onClick="handleAddClick"
+
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -68,7 +69,8 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                
+                android:onClick="handleAddClick"
+
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -85,7 +87,8 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                
+                android:onClick="handleAddClick"
+
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -96,7 +99,8 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                
+                android:onClick="handleAddClick"
+
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -113,7 +117,8 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginEnd="10sp"
-                
+                android:onClick="handleAddClick"
+
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -124,7 +129,8 @@
                 android:layout_width="160sp"
                 android:layout_height="160sp"
                 android:layout_marginStart="10sp"
-                
+                android:onClick="handleAddClick"
+
                 android:text="@string/add_chord"
                 android:textAllCaps="false"
                 android:textSize="24sp"
@@ -136,11 +142,11 @@
 
     <Switch
         android:id="@+id/switch_mode"
+        android:onClick="playmodeToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="9dp"
-        android:onClick="playmodeToggle"
         android:text="@string/action_playmode"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"

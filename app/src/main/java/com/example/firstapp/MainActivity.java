@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private Button button;
     private Switch modeSwitch;
+    private String chordToPlay = "";
     private Boolean playmode;
     public static int buttonId;
     private Button[] buttons = new Button[8];
@@ -52,29 +53,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accmeter;
     private boolean notFirstTime = false;
+    private boolean pressed = false;
     private boolean isAccSenAvailable;
     private float cX, cY, cZ, lX, lY, lZ, xDiff, yDiff, zDiff;
     private float shakeTrashHold = 5f;
     private Vibrator vib;
-    private boolean holding = false;
     private ActivityResultLauncher<Intent> chordNameResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-
                     if (result.getResultCode() == 200) {
-
                         button = (Button) findViewById(buttonId);
-
                         Intent intent = result.getData();
                         String data = "";
-
                         if (intent != null) {
                             data = intent.getStringExtra("result");
                         }
-
-
                         button.setText(data);
                         button.setBackgroundColor(getResources().getColor(R.color.added_chord));
 
@@ -89,56 +84,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.appBarMain.tools);
-
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_chords, R.id.nav_strum, R.id.nav_diagrams)
                 .setOpenableLayout(drawer)
                 .build();
-
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setItemTextColor(getResources().getColorStateList(R.color.white));
-
-
-
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        for (int i = 0; i < 8; i++) {
-            ids = getResources().getIdentifier("button" + i, "id", getPackageName());
-            buttons[i] = (Button) findViewById(ids);
-        }
-
-
-        for (int i = 0; i < 8; i++) {
-            buttons[i].setOnTouchListener((view, event) -> {
-                System.out.println("hozzadava");
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        System.out.println("ittvan");
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        System.out.println("most itt");
-                        Intent intent = new Intent(this, AddChord.class);
-                        buttonId = view.getId();
-                        chordNameResult.launch(intent);
-                        return true;
-                }
-                return false;
-            });
-
-        }
-
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             accmeter = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             isAccSenAvailable = true;
@@ -148,10 +108,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             isAccSenAvailable = false;
 
         }
+        modeSwitch = (Switch) findViewById(R.id.switch_mode);
 
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,103 +122,47 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        System.out.println("itt vagyok hello"+ item.getItemId());
-        switch (item.getItemId()) {
-            case R.id.nav_chords:
-                for (int i = 0; i < 8; i++) {
-                    ids = getResources().getIdentifier("button" + i, "id", getPackageName());
-                    buttons[i] = (Button) findViewById(ids);
-                }
-                return true;
-            case R.id.nav_strum:
-                System.out.println("strum");
-                return true;
-            case R.id.nav_diagrams:
-                System.out.println("diag");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-
-
     }
 
 
 
     public void playmodeToggle(View v) {
-
-
-
         modeSwitch = (Switch) findViewById(R.id.switch_mode);
 
-        System.out.println("valami");
         playmode = modeSwitch.isChecked();
-        System.out.println(playmode);
+        pressed = false;
+    }
 
-        if (playmode) {
-            System.out.println("ide belép");
-            for (int i = 0; i < 8; i++) {
+    public void handleAddClick(View v){
+        playmode = modeSwitch.isChecked();
 
-                    buttons[i].setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View view, MotionEvent motionEvent) {
-                            button = (Button) findViewById(view.getId());
-                            switch (motionEvent.getAction()) {
-                                case MotionEvent.ACTION_DOWN:
-                                    System.out.println("lent tart");
-                                    button.setBackgroundColor(getResources().getColor(R.color.add_chord_background));
-                                    holding = true;
-
-                                    return true;
-                                case MotionEvent.ACTION_UP:
-                                    System.out.println("kipufog");
-                                    button.setBackgroundColor(getResources().getColor(R.color.added_chord));
-
-                                    holding = false;
-                                    return true;
-                            }
-                            return false;
-                        }
-                    });
-
-            }
-        } else {
-            System.out.println("most ide lép be");
-            for (int i = 0; i < 8; i++) {
-
-                System.out.println("a ciklus megy");
-                buttons[i].setOnTouchListener((view, event) -> {
-                    System.out.println("hozzadava");
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            System.out.println("ittvan");
-                            return true;
-                        case MotionEvent.ACTION_UP:
-                            System.out.println("most itt");
-                            Intent intent = new Intent(this, AddChord.class);
-                            buttonId = view.getId();
-                            chordNameResult.launch(intent);
-                            return true;
-                    }
-                    return false;
-                });
-            }
+        if (!playmode) {
+            Intent intent = new Intent(this, AddChord.class);
+            buttonId = v.getId();
+            chordNameResult.launch(intent);
+        }else{
+            chordToPlay = ((Button) findViewById(v.getId())).getText().toString();
+            pressed = true;
         }
+
 
 
     }
 
+//    ((xDiff > shakeTrashHold && yDiff > shakeTrashHold)
+//            || (xDiff > shakeTrashHold && zDiff > shakeTrashHold)
+//            || (yDiff > shakeTrashHold && zDiff > shakeTrashHold))
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+
+        playmode = modeSwitch.isChecked();
         cX = sensorEvent.values[0];
         cY = sensorEvent.values[1];
         cZ = sensorEvent.values[2];
@@ -263,11 +170,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             xDiff = Math.abs(lX - cX);
             yDiff = Math.abs(lY - cY);
             zDiff = Math.abs(lZ - cZ);
-            if (((xDiff > shakeTrashHold && yDiff > shakeTrashHold)
-                    || (xDiff > shakeTrashHold && zDiff > shakeTrashHold)
-                    || (yDiff > shakeTrashHold && zDiff > shakeTrashHold)) && holding) {
+            if ( (yDiff > shakeTrashHold || xDiff > shakeTrashHold ) && playmode && pressed && !(chordToPlay.equals("Add chord"))) {
+                System.out.println(chordToPlay);
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vib.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE));
+                    vib.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
                     vib.vibrate(500);
                 }
