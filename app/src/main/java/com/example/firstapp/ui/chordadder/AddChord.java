@@ -21,12 +21,12 @@ public class AddChord extends Activity {
         setContentView(R.layout.add_chord);
 
         Spinner chords=findViewById(R.id.spinner_chords);
+        Spinner chordtype=findViewById(R.id.spinner_chordtype);
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this, R.array.chords, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_list);
         chords.setAdapter(adapter);
 
-        Spinner chordtype=findViewById(R.id.spinner_chordtype);
 
         ArrayAdapter<CharSequence> adapter2=ArrayAdapter.createFromResource(this, R.array.chordtype, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(R.layout.spinner_list);

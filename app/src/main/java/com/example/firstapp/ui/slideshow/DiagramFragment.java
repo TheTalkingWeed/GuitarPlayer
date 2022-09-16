@@ -24,8 +24,7 @@ public class DiagramFragment extends Fragment {
         binding = FragmentDiagramBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 

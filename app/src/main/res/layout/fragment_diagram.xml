@@ -6,19 +6,60 @@
     android:layout_height="match_parent"
     tools:context="com.example.firstapp.ui.slideshow.DiagramFragment">
 
-    <TextView
-        android:id="@+id/text_slideshow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Spinner
+        android:id="@+id/spinner_chordname"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="108dp"
+        android:background="@color/spinner_background"
+        android:dropDownWidth="100dp"
+        android:paddingRight="14dp"
+        android:popupBackground="@color/spinner_drop_background"
+        android:popupElevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinner_chordsouding"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="256dp"
+        android:background="@color/spinner_background"
+        android:dropDownWidth="100dp"
+        android:paddingRight="14dp"
+        android:popupBackground="@color/spinner_drop_background"
+        android:popupElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinner_chordtype"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="180dp"
+        android:background="@color/spinner_background"
+        android:dropDownWidth="100dp"
+        android:paddingRight="14dp"
+        android:popupBackground="@color/spinner_drop_background"
+        android:popupElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getChordClick"
+        android:text="@string/show_chord"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="651dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

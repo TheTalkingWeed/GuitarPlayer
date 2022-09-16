@@ -15,9 +15,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Switch;
 
+import com.example.firstapp.ui.apiconnection.ApiConn;
 import com.example.firstapp.ui.chordadder.AddChord;
 import com.google.android.material.navigation.NavigationView;
 
@@ -35,29 +38,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firstapp.databinding.ActivityMainBinding;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-
-
-
-
-    private Button button;
-    private Switch modeSwitch;
-    private String chordToPlay = "";
-    private Boolean playmode;
-    public static int buttonId;
-    private Button[] buttons = new Button[8];
-    private int ids = 0;
-    private SensorManager sensorManager;
-    private Sensor accmeter;
-    private boolean notFirstTime = false;
-    private boolean pressed = false;
-    private boolean isAccSenAvailable;
-    private float cX, cY, cZ, lX, lY, lZ, xDiff, yDiff, zDiff;
-    private float shakeTrashHold = 5f;
-    private Vibrator vib;
     private ActivityResultLauncher<Intent> chordNameResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -78,8 +73,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
     );
 
+    private SensorManager sensorManager;
+    private Sensor accmeter;
+    private Vibrator vib;
+
+    private Button[] buttons = new Button[8];
+    private Button button;
+    private Switch modeSwitch;
+
+    private String chordToPlay = "";
+
+    private int buttonId;
+    private int ids = 0;
+
+    private float cX, cY, cZ, lX, lY, lZ, xDiff, yDiff, zDiff;
+    private float shakeTrashHold = 5f;
+
+    private boolean notFirstTime = false;
+    private boolean pressed = false;
+    private boolean isAccSenAvailable;
+    private boolean playmode;
 
 
+    private OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,12 +125,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         }
         modeSwitch = (Switch) findViewById(R.id.switch_mode);
+        //most vagyok elsőször valstat előadáson
+        Spinner chordName=findViewById(R.id.spinner_chordname);
+        Spinner chordType=findViewById(R.id.spinner_chordtype);
+        Spinner chordSounding=findViewById(R.id.spinner_chordsouding);
 
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this, R.array.chords, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_list);
+        chordName.setAdapter(adapter);
 
+        ArrayAdapter<CharSequence> adapter1=ArrayAdapter.createFromResource(this, R.array.chordtype, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_list);
+        chordType.setAdapter(adapter1);
+
+        ArrayAdapter<CharSequence> adapter2=ArrayAdapter.createFromResource(this, R.array.chordsouinding, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_list);
+        chordSounding.setAdapter(adapter2);
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,46 +150,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return true;
     }
 
-
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-
-
-    public void playmodeToggle(View v) {
-        modeSwitch = (Switch) findViewById(R.id.switch_mode);
-
-        playmode = modeSwitch.isChecked();
-        pressed = false;
-    }
-
-    public void handleAddClick(View v){
-        playmode = modeSwitch.isChecked();
-
-        if (!playmode) {
-            Intent intent = new Intent(this, AddChord.class);
-            buttonId = v.getId();
-            chordNameResult.launch(intent);
-        }else{
-            chordToPlay = ((Button) findViewById(v.getId())).getText().toString();
-            pressed = true;
-        }
-
-
-
-    }
+    public void onSensorChanged(SensorEvent sensorEvent) {
 
 //    ((xDiff > shakeTrashHold && yDiff > shakeTrashHold)
 //            || (xDiff > shakeTrashHold && zDiff > shakeTrashHold)
 //            || (yDiff > shakeTrashHold && zDiff > shakeTrashHold))
-
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-
         playmode = modeSwitch.isChecked();
         cX = sensorEvent.values[0];
         cY = sensorEvent.values[1];
@@ -187,13 +181,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         notFirstTime = true;
 
-
     }
 
     @Override
     public void onAccuracyChanged (Sensor sensor,int i){
 
     }
+
     @Override
     protected void onResume () {
         super.onResume();
@@ -210,5 +204,63 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (isAccSenAvailable)
             sensorManager.unregisterListener(this);
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+    public void playmodeToggle(View v) {
+        modeSwitch = (Switch) findViewById(R.id.switch_mode);
+        playmode = modeSwitch.isChecked();
+        pressed = false;
+    }
+
+    public void handleAddClick(View v){
+        playmode = modeSwitch.isChecked();
+        if (!playmode) {
+            Intent intent = new Intent(this, AddChord.class);
+            buttonId = v.getId();
+            chordNameResult.launch(intent);
+        }else{
+            chordToPlay = ((Button) findViewById(v.getId())).getText().toString();
+            pressed = true;
+        }
+
+
+
+    }
+
+    public void getChordClick(View v) throws IOException{
+        String url = "https://api.uberchord.com/v1/chords/";
+
+        System.out.println(run(url));
+
+    }
+
+
+    private String data = "";
+    private String run(String url) throws IOException {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    data = response.body().string();
+                }
+            }
+        });
+
+        return data;
     }
 }
