@@ -8,145 +8,138 @@
     android:background="@color/add_chord_background"
     tools:context=".ui.chords.ChordsFragment">
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+
+    <Button
+        android:id="@+id/button0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/button2"
+        app:layout_constraintEnd_toStartOf="@id/button1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002">
+        app:layout_constraintTop_toBottomOf="@id/switch_mode" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/button0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button0"
+        app:layout_constraintTop_toTopOf="@id/button0" />
 
-            <Button
-                android:id="@+id/button0"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginEnd="10sp"
-                android:onClick="handleAddClick"
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginStart="10sp"
-                android:onClick="handleAddClick"
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/button4"
+        app:layout_constraintEnd_toStartOf="@id/button3"
+        app:layout_constraintStart_toStartOf="@id/button0"
+        app:layout_constraintTop_toBottomOf="@id/button0" />
 
-        </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="120dp">
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/button2"
+        app:layout_constraintEnd_toEndOf="@id/button1"
+        app:layout_constraintStart_toEndOf="@id/button2"
+        app:layout_constraintTop_toTopOf="@id/button2" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginEnd="10sp"
-                android:onClick="handleAddClick"
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:layout_marginEnd="16dp"
 
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/button6"
+        app:layout_constraintEnd_toStartOf="@id/button5"
+        app:layout_constraintStart_toStartOf="@id/button0"
+        app:layout_constraintTop_toBottomOf="@id/button2"/>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginStart="10sp"
-                android:onClick="handleAddClick"
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/button4"
+        app:layout_constraintTop_toTopOf="@id/button4"
+        app:layout_constraintBottom_toBottomOf="@id/button4"
+        app:layout_constraintEnd_toEndOf="@id/button1"/>
 
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
 
-        </TableRow>
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:layout_marginBottom="16dp"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:layout_marginEnd="16dp"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@id/button0"
+        app:layout_constraintEnd_toStartOf="@id/button7"
+        app:layout_constraintTop_toBottomOf="@id/button4"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
+        android:onClick="handleAddClick"
+        android:text="@string/add_chord"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/button6"
+        app:layout_constraintBottom_toBottomOf="@id/button6"
+        app:layout_constraintEnd_toEndOf="@id/button1"
+        app:layout_constraintTop_toTopOf="@id/button6"/>
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginEnd="10sp"
-                android:onClick="handleAddClick"
-
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginStart="10sp"
-                android:onClick="handleAddClick"
-
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginEnd="10sp"
-                android:onClick="handleAddClick"
-
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="160sp"
-                android:layout_height="160sp"
-                android:layout_marginStart="10sp"
-                android:onClick="handleAddClick"
-
-                android:text="@string/add_chord"
-                android:textAllCaps="false"
-                android:textSize="24sp"
-                android:backgroundTint="@color/add_chord_buttonColor"/>
-
-        </TableRow>
-
-    </TableLayout>
 
     <Switch
         android:id="@+id/switch_mode"
-        android:onClick="playmodeToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="9dp"
+        android:onClick="playmodeToggle"
         android:text="@string/action_playmode"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"

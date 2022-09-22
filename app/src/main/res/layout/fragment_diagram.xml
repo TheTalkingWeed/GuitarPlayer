@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/add_chord_background"
     tools:context="com.example.firstapp.ui.slideshow.DiagramFragment">
 
     <Spinner
@@ -20,32 +21,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:entries="@array/chords"/>
 
-    <Spinner
-        android:id="@+id/spinner_chordsouding"
-        style="@style/Widget.AppCompat.Spinner"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="256dp"
-        android:background="@color/spinner_background"
-        android:dropDownWidth="100dp"
-        android:paddingRight="14dp"
-        android:popupBackground="@color/spinner_drop_background"
-        android:popupElevation="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner_chordtype"
         style="@style/Widget.AppCompat.Spinner"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="184dp"
         android:background="@color/spinner_background"
         android:dropDownWidth="100dp"
+        android:entries="@array/chordtype"
         android:paddingRight="14dp"
         android:popupBackground="@color/spinner_drop_background"
         android:popupElevation="3dp"
@@ -54,12 +42,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="186dp"
+        android:backgroundTint="@color/add_chord_buttonColor"
         android:onClick="getChordClick"
         android:text="@string/show_chord"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="651dp" />
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

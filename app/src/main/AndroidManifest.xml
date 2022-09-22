@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.firstapp">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -29,6 +35,9 @@
 
         <activity android:name=".ui.chordadder.AddChord"
             android:label="@string/add_chord_name">
+        </activity>
+        <activity android:name=".ui.diagrampac.ChordDiagramActivity"
+            android:label="@string/chord_diagram">
         </activity>
 
 

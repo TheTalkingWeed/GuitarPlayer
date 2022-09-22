@@ -9,6 +9,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_playchord">Play chord</string>
     <string name="action_playmode">Playing mode</string>
+    <string name="chord_diagram">Chord diagram</string>
 
     <string name="menu_chords">Chords view</string>
     <string name="menu_strum">Strum view</string>
@@ -19,28 +20,24 @@
     <string name="dropdown_name">Chord names</string>
     <string-array name="chords">
         <item>A</item>
-        <item>A#</item>
+        <item>Bb</item>
         <item>B</item>
         <item>C</item>
-        <item>C#</item>
+        <item>Db</item>
         <item>D</item>
-        <item>D#</item>
+        <item>Eb</item>
         <item>E</item>
+        <item>Fb</item>
         <item>F</item>
-        <item>F#</item>
-        <item>G</item>
-        <item>G#</item>
+        <item>Gb</item>
+        <item>Ab</item>
     </string-array>
     <string name="dropdown_name2">Chord type</string>
+
     <string-array name="chordtype">
         <item>Major</item>
         <item>Minor</item>
-
     </string-array>
 
-    <string-array name="chordsouinding">
-        <item>Major</item>
-        <item>Minor</item>
 
-    </string-array>
 </resources>

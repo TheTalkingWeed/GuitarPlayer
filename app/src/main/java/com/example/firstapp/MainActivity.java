@@ -1,7 +1,12 @@
 package com.example.firstapp;
 
+import android.app.Fragment;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,17 +16,17 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.firstapp.ui.apiconnection.ApiConn;
+import com.example.firstapp.databinding.ActivityMainBinding;
 import com.example.firstapp.ui.chordadder.AddChord;
+import com.example.firstapp.ui.chrodClass.ChordFromApi;
+import com.example.firstapp.ui.diagrampac.ChordDiagramActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResult;
@@ -36,12 +41,9 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.firstapp.databinding.ActivityMainBinding;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,6 +52,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    public static final String EXTRA_MESSAGE0 = "com.example.firstapp.MESSAGE0";
+    public static final String EXTRA_MESSAGE1 = "com.example.firstapp.MESSAGE1";
+    public static final String EXTRA_MESSAGE2 = "com.example.firstapp.MESSAGE2";
+
+    private static final int REQUEST_ENABLE_BT = 0;
+    private static final int REQUEST_DISCOVER_BT = 1;
+
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -73,13 +83,64 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
     );
 
+
+
+    private ActivityResultLauncher<Intent> discoverAct = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+
+                }
+            }
+    );
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+
+            textView = findViewById(R.id.textViewofStrum);
+
+            String action = intent.getAction();
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                System.out.println("device found");
+            }
+            else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+                System.out.println("device connected");
+                textView.setText("ok");
+            }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                System.out.println("device searching");
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
+                System.out.println("device is about to disconnect");
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+                System.out.println("device disconnected");
+                textView.setText("not ok");
+            }
+        }
+    };
+
+
+
     private SensorManager sensorManager;
     private Sensor accmeter;
     private Vibrator vib;
+    private String apiResultData = "";
+    private BluetoothAdapter bluetoothAdapter;
 
     private Button[] buttons = new Button[8];
     private Button button;
     private Switch modeSwitch;
+    private TextView textView;
+
+    private ChordFromApi chordFromApi;
+
 
     private String chordToPlay = "";
 
@@ -118,29 +179,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             accmeter = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             isAccSenAvailable = true;
-            System.out.println(" available");
         } else {
-            System.out.println(" not available");
             isAccSenAvailable = false;
 
         }
         modeSwitch = (Switch) findViewById(R.id.switch_mode);
-        //most vagyok elsőször valstat előadáson
-        Spinner chordName=findViewById(R.id.spinner_chordname);
-        Spinner chordType=findViewById(R.id.spinner_chordtype);
-        Spinner chordSounding=findViewById(R.id.spinner_chordsouding);
 
-        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this, R.array.chords, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_list);
-        chordName.setAdapter(adapter);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        ArrayAdapter<CharSequence> adapter1=ArrayAdapter.createFromResource(this, R.array.chordtype, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_list);
-        chordType.setAdapter(adapter1);
 
-        ArrayAdapter<CharSequence> adapter2=ArrayAdapter.createFromResource(this, R.array.chordsouinding, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_list);
-        chordSounding.setAdapter(adapter2);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        this.registerReceiver(mReceiver, filter);
+
+
 
     }
 
@@ -164,11 +219,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             xDiff = Math.abs(lX - cX);
             yDiff = Math.abs(lY - cY);
             zDiff = Math.abs(lZ - cZ);
-            if ( (yDiff > shakeTrashHold || xDiff > shakeTrashHold ) && playmode && pressed && !(chordToPlay.equals("Add chord"))) {
+            if ((yDiff > shakeTrashHold || xDiff > shakeTrashHold) && playmode && pressed && !(chordToPlay.equals("Add chord"))) {
                 System.out.println(chordToPlay);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vib.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+                    vib.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
                     vib.vibrate(500);
                 }
@@ -184,12 +239,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void onAccuracyChanged (Sensor sensor,int i){
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
 
     @Override
-    protected void onResume () {
+    protected void onResume() {
         super.onResume();
 
         if (isAccSenAvailable)
@@ -198,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    protected void onPause () {
+    protected void onPause() {
         super.onPause();
 
         if (isAccSenAvailable)
@@ -219,48 +274,80 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         pressed = false;
     }
 
-    public void handleAddClick(View v){
+    public void handleAddClick(View v) {
         playmode = modeSwitch.isChecked();
         if (!playmode) {
             Intent intent = new Intent(this, AddChord.class);
             buttonId = v.getId();
             chordNameResult.launch(intent);
-        }else{
+        } else {
             chordToPlay = ((Button) findViewById(v.getId())).getText().toString();
             pressed = true;
         }
 
 
-
-    }
-
-    public void getChordClick(View v) throws IOException{
-        String url = "https://api.uberchord.com/v1/chords/";
-
-        System.out.println(run(url));
-
     }
 
 
-    private String data = "";
-    private String run(String url) throws IOException {
+    public void getChordClick(View v) throws IOException {
+        Spinner chordName = findViewById(R.id.spinner_chordname);
+        Spinner chordType = findViewById(R.id.spinner_chordtype);
+
+
+        String chordNameFromSpinner = chordName.getSelectedItem().toString();
+        String chordTypeFromSpinner = chordType.getSelectedItem().toString();
+
+
+        chordTypeFromSpinner = chordTypeFromSpinner.equals("Major") ? "" : "_m";
+
+
+        String url = "https://api.uberchord.com/v1/chords/" + chordNameFromSpinner + chordTypeFromSpinner;
+
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "Need internet connection to show the chord", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 e.printStackTrace();
+
             }
+
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    data = response.body().string();
+
+                if (response.isSuccessful()) {
+                    apiResultData = response.body().string();
+                    chordFromApi = new ChordFromApi(apiResultData);
+                    System.out.println(chordFromApi);
+
+                    Intent intent = new Intent(MainActivity.this, ChordDiagramActivity.class);
+                    intent.putExtra(EXTRA_MESSAGE0, chordFromApi.getName());
+                    intent.putExtra(EXTRA_MESSAGE1, chordFromApi.getStrings());
+                    intent.putExtra(EXTRA_MESSAGE2, chordFromApi.getFingers());
+
+                    startActivity(intent);
+
+
                 }
             }
         });
 
-        return data;
+
+        System.out.println(chordNameFromSpinner + chordTypeFromSpinner);
+        System.out.println(url);
+
+
+    }
+
+    private void displayToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }
