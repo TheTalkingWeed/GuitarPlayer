@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public static final String EXTRA_MESSAGE1 = "com.example.firstapp.MESSAGE1";
     public static final String EXTRA_MESSAGE2 = "com.example.firstapp.MESSAGE2";
 
-    private static final int REQUEST_ENABLE_BT = 0;
-    private static final int REQUEST_DISCOVER_BT = 1;
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -105,21 +103,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             String action = intent.getAction();
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            
+            if (device.ACTION_FOUND.equals(action)) {
                 System.out.println("device found");
             }
-            else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+            else if (device.ACTION_ACL_CONNECTED.equals(action)) {
                 System.out.println("device connected");
                 textView.setText("ok");
             }
             else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 System.out.println("device searching");
             }
-            else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
+            else if (device.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
                 System.out.println("device is about to disconnect");
             }
-            else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+            else if (device.ACTION_ACL_DISCONNECTED.equals(action)) {
                 System.out.println("device disconnected");
                 textView.setText("not ok");
             }
@@ -311,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 MainActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(MainActivity.this, "Need internet connection to show the chord", Toast.LENGTH_SHORT).show();
+                        displayToast("Need internet connection to show the chord");
                     }
                 });
 
