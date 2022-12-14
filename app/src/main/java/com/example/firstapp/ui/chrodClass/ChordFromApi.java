@@ -9,8 +9,8 @@ public class ChordFromApi {
     public ChordFromApi(String dataFromApi) {
         String[] rawData = dataFromApi.substring(2,dataFromApi.length()-2).replace("\"","").split("[:,]");
         setName(rawData[5]);
-        setStrings(rawData[1]);
-        setFingers(rawData[3]);
+        setStrings(rawData[1].replaceAll(" ",""));
+        setFingers(rawData[3].replaceAll(" ",""));
 
     }
 

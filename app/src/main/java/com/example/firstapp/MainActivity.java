@@ -93,36 +93,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
     );
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
 
-
-
-            textView = findViewById(R.id.textViewofStrum);
-
-            String action = intent.getAction();
-            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            
-            if (device.ACTION_FOUND.equals(action)) {
-                System.out.println("device found");
-            }
-            else if (device.ACTION_ACL_CONNECTED.equals(action)) {
-                System.out.println("device connected");
-                textView.setText("ok");
-            }
-            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                System.out.println("device searching");
-            }
-            else if (device.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
-                System.out.println("device is about to disconnect");
-            }
-            else if (device.ACTION_ACL_DISCONNECTED.equals(action)) {
-                System.out.println("device disconnected");
-                textView.setText("not ok");
-            }
-        }
-    };
 
 
 
@@ -182,18 +153,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         }
         modeSwitch = (Switch) findViewById(R.id.switch_mode);
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-        this.registerReceiver(mReceiver, filter);
-
-
 
     }
 
